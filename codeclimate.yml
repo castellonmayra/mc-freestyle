@@ -1,0 +1,15 @@
+# this is the ".codeclimate.yml" file (in the root directory of your repo)
+#
+# see: https://docs.codeclimate.com/docs/duplication-concept
+# ... https://docs.codeclimate.com/docs/default-analysis-configuration#sample-codeclimateyml
+#
+version: "2"
+checks:
+  #similar-code:
+  #  enabled: true
+  #  config:
+  #    threshold:
+  identical-code:
+    enabled: true
+    config:
+      threshold: 2
