@@ -1,8 +1,8 @@
 # mc-freestyle
 
 
+Sends you an email with attached figures for upcomming dividend volume based on metricsdata file. 
 
-pip install -U kaleido
 
 
 Create: .env file with following content

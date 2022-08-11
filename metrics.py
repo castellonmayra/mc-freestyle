@@ -1,5 +1,4 @@
 from pandas import read_csv
-from statistics import mean, median
 import os
 import csv
 import plotly.io as pio
@@ -52,16 +51,16 @@ def create_images():
     fig1.show()
 
     fig2 = bar(data_frame=result_df, 
-                y="Event ID", 
-                x="MARKET VALUE",
+                y="SECURITY", 
+                x="Quantity of Desks",
                 orientation="h",
-                title="Market Value By EVENT ID", 
+                title="Quantity of Desks by Security", 
                 
                 # from the docs: "The keys of this dict should correspond to column names, 
                 # and the values should correspond to the desired label to be displayed.
-                labels={"Event ID": "Event ID", "MARKET VALUE": "Market Value"},
+                labels={"SECURITY": "Security", "Quantity of Desks": "Quantity of Desks"},
             
-                color="MARKET VALUE")
+                color="Quantity of Desks")
     fig2.show()
 
 
@@ -94,8 +93,8 @@ def create_attachment(name):
 
 def send_failure_email():
     client = SendGridAPIClient(SENDGRID_API_KEY) #> <class 'sendgrid.sendgrid.SendGridAPIClient>
-    subject = "Failure: blabla"
-    html = "no csv."
+    subject = "Failure: No CSV File for Upcomming Dividend Events"
+    html = "No csv. Please contact support."
     message = Mail(from_email=SENDER_EMAIL_ADDRESS, to_emails=SENDER_EMAIL_ADDRESS, subject=subject, html_content=html)
 
     try:
@@ -110,9 +109,7 @@ def send_failure_email():
 
 def send_email(subject, html):
     """
-    Sends an email with the specified subject and html contents to the specified recipient,
-
-    If recipient is not specified, sends to the admin's sender address by default.
+    
     """
     client = SendGridAPIClient(SENDGRID_API_KEY) #> <class 'sendgrid.sendgrid.SendGridAPIClient>
     print("CLIENT:", type(client))
@@ -137,12 +134,12 @@ def run_program():
         send_failure_email()
         return None
 
-    subject = "[Daily Volume Briefing] This is a test"
+    subject = "Upcomming Dividend Events"
     
     todays_date = date.today().strftime('%A, %B %d, %Y')
 
     html = ""
-    html += "<h3>Good Morning!</h3>"
+    html += "<h3>Good Morning! See attached for upcomming dividends the team will be monitoring.</h3>"
     html += f"<h4>{todays_date}</h4>"
 
     send_email(subject, html)
