@@ -1,0 +1,23 @@
+from pandas import read_csv
+import os
+import csv
+import plotly.io as pio
+import base64
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail, Attachment, FileContent, FileName, FileType, Disposition, ContentId
+
+from dotenv import load_dotenv
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+from datetime import date
+import plotly.express as px
+
+from plotly.express import bar
+from plotly.express import line
+
+
+pandas
+plotly
+python-dotenv
+pytest
+sendgrid==6.6.0

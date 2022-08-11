@@ -2,12 +2,12 @@ from pandas import read_csv
 import os
 import csv
 import plotly.io as pio
+from plotly.express import line
 import base64
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, Attachment, FileContent, FileName, FileType, Disposition, ContentId
 
 from dotenv import load_dotenv
-from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from datetime import date
 import plotly.express as px
@@ -63,6 +63,17 @@ def create_images():
                 color="Quantity of Desks")
     fig2.show()
 
+    fig3 = px.histogram(data_frame=result_df, 
+                y="MARKET VALUE", 
+                x="Pay Date", 
+                color="Region",
+                title="Market Value by Pay Date", 
+                barmode="group",
+                labels={"MARKET VALUE": "Market Value", "Pay Date": "Pay Date"})
+    fig3.update_layout(yaxis_tickprefix = '$', yaxis_tickformat = ',.')
+    #print(type(fig))
+    fig3.show()
+
 
     ## create directory if not exists 
     if not os.path.exists("images"):
@@ -71,6 +82,7 @@ def create_images():
     # Save image to file
     fig1.write_image("images/fig1.png")
     fig2.write_image("images/fig2.png")
+    fig3.write_image("images/fig3.png")
     return True
 
 
@@ -118,6 +130,7 @@ def send_email(subject, html):
     message = Mail(from_email=SENDER_EMAIL_ADDRESS, to_emails=SENDER_EMAIL_ADDRESS, subject=subject, html_content=html)
     message.attachment = create_attachment("images/fig1.png")
     message.attachment = create_attachment("images/fig2.png")
+    message.attachment = create_attachment("images/fig3.png")
 
     try:
         response = client.send(message)
